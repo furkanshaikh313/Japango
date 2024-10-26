@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Reader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-white shadow-md flex justify-between items-center p-4">
+        <div class="flex items-center">
+            <img src="/images/webcam.png" alt="Logo" class="h-8 w-8 mr-2"> 
+            <h1 class="text-2xl font-bold text-blue-600">Webcam Reader</h1>
+        </div>
+        <div class="flex items-center">
+
+            <button id="logoutButton" class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 transition duration-300">Logout</button>
+        </div>
+    </header>
+
+    <main class="container mx-auto max-w-6xl bg-white shadow-lg rounded-lg p-8 mt-6">
+        
+        <div class="mb-6 bg-gray-50 p-4 rounded-lg">
+            <div id="sentenceTab">
+                <p id="sentence" class="text-lg font-medium mb-2">Read the following sentence aloud:</p>
+                <blockquote class="italic text-gray-700 border-l-4 border-blue-500 pl-4 py-2">
+                    The quick brown fox jumps over the lazy dog.
+                </blockquote>
+            </div>
+        </div>
+        
+        <div class="video-container mb-6">
+            <video id="webcam" autoplay playsinline class="w-full h-[68vh] bg-black rounded-lg object-cover"></video> <!-- Increased height -->
+        </div>
+
+        <div class="score-container mb-6">
+            <div id="accuracyTab" class="bg-gray-50 p-4 rounded-lg mb-4">
+                <div id="accuracyScore" class="text-lg font-medium text-center">Accuracy will be shown here.</div>
+            </div>
+            <div class="flex justify-center space-x-4">
+                <button id="startButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                    Start Webcam
+                </button>
+                <button id="stopButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                    Stop Webcam
+                </button>
+                <button id="startRecognitionButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Start Recognition
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="mainscript.js"></script>
+
+    <script>
+
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = "index.html";
+            }
+        };
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            localStorage.removeItem('token');
+            window.location.href = "index.html"; 
+        });
+    </script>
+</body>
+</html>

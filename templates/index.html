@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Language Learning Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-white shadow-md flex justify-between items-center p-4">
+        <div class="flex items-center">
+            <img src="/static/images/webcam.png" alt="Logo" class="h-8 w-8 mr-2"> 
+            <h1 class="text-2xl font-bold text-blue-600">Webcam Reader</h1>
+        </div>
+        <div class="flex items-center">
+            <button id="logoutButton" class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 transition duration-300">Logout</button>
+        </div>
+    </header>
+    <main class="flex-grow flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+            <h1 class="text-2xl font-bold mb-6 text-center">Japanese Language Learning Tool</h1>
+            <form action="/generate" method="post" class="space-y-4">
+                <div>
+                    <label for="difficulty" class="block text-sm font-medium text-gray-700">Select Difficulty:</label>
+                    <select id="difficulty" name="difficulty" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Generate Words
+                </button>
+            </form>
+        </div>
+    </main>
+    <script>
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = "/";
+            }
+        }
+
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('token');
+            window.location.href = "/"
+        });
+
+        window.onload = checkAuth;
+    </script>
+</body>
+</html>

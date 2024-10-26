@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Japanese Words</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-white shadow-md flex justify-between items-center p-4">
+        <div class="flex items-center">
+            <img src="/images/webcam.png" alt="Logo" class="h-8 w-8 mr-2"> 
+            <h1 class="text-2xl font-bold text-blue-600">Webcam Reader</h1>
+        </div>
+        <div class="flex items-center">
+            <button id="logoutButton" class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 transition duration-300">Logout</button>
+        </div>
+    </header>
+    <main class="flex-grow p-8">
+        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-bold mb-6 text-center">Generated Japanese Words</h1>
+            <div class="space-y-4">
+                {% for word, audio_file in zip(words, audio_files) %}
+                <div class="bg-gray-50 p-4 rounded-md">
+                    <h2 class="text-lg font-semibold mb-2">{{ word }}</h2>
+                    <audio controls src="{{ url_for('static', filename='audio/' + audio_file) }}" class="w-full"></audio>
+                    <form action="/upload" method="post" enctype="multipart/form-data" class="mt-4">
+                        <input type="hidden" name="word" value="{{ word }}">
+                        <div class="flex items-center space-x-4">
+                            <input type="file" name="user_audio" accept="audio/*" required class="flex-grow">
+                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Compare
+                            </button>
+                        </div>
+                    </form>
+                    <div id="result-{{ loop.index }}" class="mt-2"></div>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="/home" class="block mt-8 text-center text-blue-500 hover:text-blue-700">Generate New Words</a>
+        </div>
+    </main>
+    <script>
+        // Authentication check
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = "/auth.html";
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('token');
+            window.location.href = "/";
+        });
+
+        // Check authentication on page load
+        window.onload = checkAuth;
+
+        // Handle form submissions
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: formData
+                });
+                const data = await response.json();
+                const resultDiv = form.nextElementSibling;
+                resultDiv.textContent = `Similarity: ${data.similarity.toFixed(2)}% - ${data.message}`;
+            });
+        });
+    </script>
+</body>
+</html>

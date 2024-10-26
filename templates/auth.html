@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="relative bg-gray-100 min-h-screen flex items-center justify-center">
+    <header class="fixed top-0 w-full shadow-md flex justify-between items-center p-4">
+        <div class="flex items-center">
+            <img src="../static/images/webcam.png" alt="Logo" class="h-8 w-8 mr-2"> 
+            <h1 class="text-2xl font-bold text-blue-600">Webcam Reader</h1>
+        </div>
+    </header>
+    <div class="container max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Welcome</h1>
+        <div class="form-container">
+            <form id="loginForm" class="space-y-4">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Login</h2>
+                <input type="text" name="username" placeholder="Username" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="password" name="password" placeholder="Password" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">Login</button>
+                <p class="text-center text-gray-600">Don't have an account? <a href="#" id="showSignup" class="text-blue-500 hover:underline">Sign up</a></p>
+            </form>
+
+            <form id="signupForm" class="space-y-4" style="display: none;">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Sign Up</h2>
+                <input type="text" id="username" name="username" placeholder="Username" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="email" id="email" name="email" placeholder="Email" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="password" id="password" name="password" placeholder="Password" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-300">Sign Up</button>
+                <p class="text-center text-gray-600">Already have an account? <a href="#" id="showLogin" class="text-blue-500 hover:underline">Login</a></p>
+            </form>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                window.location.href = "/home";
+            }
+        };
+    </script>
+    <script src="../static/script.js"></script>
+</body>
+</html>
