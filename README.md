@@ -9,7 +9,6 @@ Prerequisites
 Google Gemini API Key
 
 Get your API key from Google Gemini.
-Add the key to the .env file in the project root.
 Edge TTS and FFMPEG
 
 Install edge-tts by following instructions on its GitHub repository.
@@ -25,12 +24,8 @@ Install dependencies:
 bash
 Copy code
 pip install -r requirements.txt
-Set up .env file:
 
-Add your Google Gemini API key in the .env file as follows:
-plaintext
-Copy code
-GEMINI_API_KEY=your_api_key_here
+
 Usage
 To start the application, run the following command:
 
